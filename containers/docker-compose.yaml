@@ -1,0 +1,11 @@
+
+
+services:
+  semgrep:
+    image: semgrep/semgrep:latest
+    volumes:
+      - ${TARGET_REPO_PATH}:/src
+    working_dir: /src
+    command: semgrep scan --config auto --json --output /src/results.json /src
+
+

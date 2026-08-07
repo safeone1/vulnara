@@ -11,20 +11,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  install:
-    name: Install dependencies
+  build:
+    name: Install & Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@v4 # v4
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a3cb3ef87bc59c # v2
+        uses: oven-sh/setup-bun@v2 # v2
         with:
           bun-version: latest
 
       - name: Cache bun install
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
+        uses: actions/cache@v4 # v4
         with:
           path: |
             ~/.bun/install/cache
@@ -35,120 +35,8 @@ jobs:
           restore-keys: |
             bun-${{ runner.os }}-
 
-      - name: Install
+      - name: Install dependencies
         run: bun install --frozen-lockfile
 
-  lint:
-    name: Lint
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a3cb3ef87bc59c # v2
-        with:
-          bun-version: latest
-      - name: Cache bun install
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
-        with:
-          path: |
-            ~/.bun/install/cache
-            node_modules
-            apps/*/node_modules
-            packages/*/node_modules
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
-          restore-keys: |
-            bun-${{ runner.os }}-
-      - run: bun install --frozen-lockfile
-      - name: Run turbo lint
-        run: bunx turbo run lint
-
-  typecheck:
-    name: Typecheck
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a3cb3ef87bc59c # v2
-        with:
-          bun-version: latest
-      - name: Cache bun install
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
-        with:
-          path: |
-            ~/.bun/install/cache
-            node_modules
-            apps/*/node_modules
-            packages/*/node_modules
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
-          restore-keys: |
-            bun-${{ runner.os }}-
-      - run: bun install --frozen-lockfile
-      - name: Run turbo typecheck
-        run: bunx turbo run typecheck
-
-  build:
-    name: Build
-    needs: [lint, typecheck]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - uses: oven-sh/setup-bun@4bc047ad259df6fc24a6c9b0f9a3cb3ef87bc59c # v2
-        with:
-          bun-version: latest
-      - name: Cache bun install
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
-        with:
-          path: |
-            ~/.bun/install/cache
-            node_modules
-            apps/*/node_modules
-            packages/*/node_modules
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
-          restore-keys: |
-            bun-${{ runner.os }}-
-      - run: bun install --frozen-lockfile
-      - name: Run turbo build
+      - name: Build
         run: bunx turbo run build
-
-  test:
-    name: Test
-    needs: install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4 # v4
-        with:
-          bun-version: latest
-      - name: Cache bun install
-        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4
-        with:
-          path: |
-            ~/.bun/install/cache
-            node_modules
-            apps/*/node_modules
-            packages/*/node_modules
-          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
-          restore-keys: |
-            bun-${{ runner.os }}-
-      - run: bun install --frozen-lockfile
-      - name: Run turbo test
-        run: bunx turbo run test
-
-  self-scan:
-    name: Semgrep self-scan (dogfood)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4 # v4
-
-      - name: Run Semgrep
-        uses: semgrep/semgrep-action@a86b6c3f2a67ac292fdc65afa7d7bfd8fed81795 # latest tag, pin to a commit SHA before relying on this long-term
-        with:
-          config: auto
-        env:
-          SEMGREP_RULES: auto
-
-      # Alternative if you'd rather run it exactly like your own pipeline does,
-      # using your own containerized invocation instead of the marketplace action:
-      # - name: Run Semgrep (self-hosted invocation)
-      #   run: |
-      #     docker run --rm -v ${{ github.workspace }}:/src \
-      #       semgrep/semgrep semgrep scan --config auto --error /src

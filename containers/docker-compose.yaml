@@ -4,8 +4,23 @@ services:
   semgrep:
     image: semgrep/semgrep:latest
     volumes:
-      - ${TARGET_REPO_PATH}:/src
+      - semgrep_results:/src
     working_dir: /src
     command: semgrep scan --config auto --json --output /src/results.json /src
 
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: vulnara
+      POSTGRES_PASSWORD: vulnara
+      POSTGRES_DB: vulnara
+    ports:
+      - "6543:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
+  semgrep_results:
 

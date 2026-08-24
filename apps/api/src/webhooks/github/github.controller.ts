@@ -12,6 +12,7 @@ export class GithubWebhooksController {
   @Post()
   handle(@Req() req: Request, @Headers('x-github-event') event: string) {
     const payload = req.body as WebhookEvent;
+    console.log(`[github.${event}]`);
     this.eventEmitter.emit(`github.${event}`, payload);
     return { received: true };
   }

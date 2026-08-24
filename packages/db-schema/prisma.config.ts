@@ -5,7 +5,6 @@ import { defineConfig } from "prisma/config";
 
 // Prisma's CLI always runs under real Node (its bin has a `#!/usr/bin/env node`
 // shebang), so Bun's automatic .env.local loading never applies here — load it explicitly.
-config();
 config({ path: ".env.local", override: true });
 
 export default defineConfig({

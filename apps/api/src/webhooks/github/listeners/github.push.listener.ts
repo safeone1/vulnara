@@ -8,8 +8,9 @@ export class GithubPushListener {
   handlePushEvent(payload: PushEvent) {
     console.log(
       '[github.push] event received:',
-      payload.pusher.username,
+      payload.pusher.name,
       payload.repository.full_name,
+      payload.commits.at(-1)?.modified,
     );
   }
 }

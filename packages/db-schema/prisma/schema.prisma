@@ -10,6 +10,28 @@ datasource db {
 }
 
 
+model GithubInstallation {
+	id String @id @default(cuid())
+	installationId String @unique
+	userId String
+	user User @relation(fields: [userId], references: [id])
+	accountLogin String
+	accountType String
+	repositorySelection String
+	repositories GithubRepo[]
+	createdAt DateTime @db.Timestamptz(3)
+}
+
+model GithubRepo{
+	id String @id @default(cuid())
+	githubInstallationId String
+	githubInstallation GithubInstallation @relation(fields: [githubInstallationId], references: [id])
+	repoId String
+	repoName String
+	repoFullName String
+	isPrivate Boolean
+}
+
 model User {
 	id String @id
 	name String
@@ -21,6 +43,7 @@ model User {
 	@@map("user")
 	accounts Account[]
 	sessions Session[]
+	githubInstallations GithubInstallation[]
 }
 
 model Session {

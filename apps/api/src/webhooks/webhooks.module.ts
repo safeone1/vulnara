@@ -1,16 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { GithubService } from './github.service';
-import { GithubWebhooksController } from './github.controller';
-import { GithubSignatureMiddleware } from './github.middleware';
+import { Module } from '@nestjs/common';
+import { GithubModule } from './github/github.module';
 
 @Module({
-  providers: [GithubService],
-  controllers: [GithubWebhooksController],
+  // providers: [GithubModule],
+  // controllers: [GithubWebhooksController],
+  imports: [GithubModule],
 })
-export class WebhooksModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(GithubSignatureMiddleware)
-      .forRoutes(GithubWebhooksController);
-  }
-}
+export class WebhooksModule {}

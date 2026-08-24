@@ -5,7 +5,11 @@ import type { PushEvent } from '@octokit/webhooks-types';
 @Injectable()
 export class GithubPushListener {
   @OnEvent('github.push')
-  handlePushEvent(payload: any) {
-    console.log('[github.push] event received:', payload);
+  handlePushEvent(payload: PushEvent) {
+    console.log(
+      '[github.push] event received:',
+      payload.pusher.username,
+      payload.repository.full_name,
+    );
   }
 }

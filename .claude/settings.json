@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun install *)",
+      "Bash(bun run *)",
+      "Bash(curl -s http://localhost:3000/auth)",
+      "Read(//home/safeone/.cache/ms-playwright/**)",
+      "Bash(find / -maxdepth 4 -iname \"ms-playwright\" -type d)",
+      "Bash(bunx playwright@1.62.1 --help)",
+      "Bash(bun /tmp/claude-1000/-home-safeone-dev-SafeProd-vulnara/2fce784b-482b-468b-811a-128c83ea4d89/scratchpad/screenshot.mjs /tmp/claude-1000/-home-safeone-dev-SafeProd-vulnara/2fce784b-482b-468b-811a-128c83ea4d89/scratchpad/auth-page.png)",
+      "Bash(node /tmp/claude-1000/-home-safeone-dev-SafeProd-vulnara/2fce784b-482b-468b-811a-128c83ea4d89/scratchpad/screenshot.mjs /tmp/claude-1000/-home-safeone-dev-SafeProd-vulnara/2fce784b-482b-468b-811a-128c83ea4d89/scratchpad/auth-page.png)",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, \"userId\", \"expiresAt\", \"createdAt\" from \"Session\" order by \"createdAt\" desc limit 5;')",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, email, \"createdAt\" from \"User\" order by \"createdAt\" desc limit 5;')",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, identifier, \"expiresAt\", \"createdAt\" from \"Verification\" order by \"createdAt\" desc limit 5;')",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c \"\\\\dt\")",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, \"userId\", \"expiresAt\", \"createdAt\" from session order by \"createdAt\" desc limit 5;')",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, email, \"createdAt\" from \"user\" order by \"createdAt\" desc limit 5;')",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, identifier, \"expiresAt\", \"createdAt\" from verification order by \"createdAt\" desc limit 10;')",
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, \"userId\", \"providerId\", \"createdAt\" from account order by \"createdAt\" desc limit 5;')"
+    ]
+  }
+}

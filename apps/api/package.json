@@ -5,8 +5,12 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "exports": {
+    "./trpc": "./src/@generated/server.ts"
+  },
   "scripts": {
-    "build": "nest build",
+    "generate": "nestjs-trpc generate",
+    "build": "nestjs-trpc generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "bun run src/main.ts",
     "dev": "bun --watch src/main.ts",
@@ -23,8 +27,10 @@
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/event-emitter": "^3.1.0",
     "@nestjs/platform-express": "^11.0.1",
     "@thallesp/nestjs-better-auth": "^2.7.0",
+    "@trpc/server": "^11.18.0",
     "@vulnara/db-schema": "*",
     "better-auth": "^1.7.1",
     "nestjs-trpc": "^2.13.0",
@@ -37,6 +43,7 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@octokit/webhooks-types": "^7.6.1",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",

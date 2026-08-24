@@ -1,6 +1,8 @@
 import { Controller, Post, Req, Headers } from '@nestjs/common';
+import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
 import type { Request } from 'express';
 
+@AllowAnonymous()
 @Controller('webhooks/github')
 export class GithubWebhooksController {
   @Post()

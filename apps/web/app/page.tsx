@@ -1,28 +1,31 @@
-'use client'
-import {  useSession } from "@/lib/auth-client"
-import { useTRPC } from '@/lib/trpc'
-import { useQuery } from '@tanstack/react-query'
-const Page =  () => {
-  const { data, error } = useSession()
-  const { github } = useTRPC()
-  const {data : s , isPending} = useQuery(github.getGithubData.queryOptions())
+import { SiteHeader } from "@/components/landing/site-header";
+import { Hero } from "@/components/landing/hero";
+import { TrustStrip } from "@/components/landing/trust-strip";
+import { Pipeline } from "@/components/landing/pipeline";
+import { FeaturesBento } from "@/components/landing/features-bento";
+import { ConsolePreview } from "@/components/landing/console-preview";
+import { Metrics } from "@/components/landing/metrics";
+import { Pricing } from "@/components/landing/pricing";
+import { Faq } from "@/components/landing/faq";
+import { ClosingCta } from "@/components/landing/closing-cta";
+import { SiteFooter } from "@/components/landing/site-footer";
+
+export default function LandingPage() {
   return (
-    <div>
-      {error && <p>Error: {error.message}</p>}
-      {!error && data && (
-        <div>
-          <p>Welcome, {data.user.name}!</p>
-          <p>Email: {data.user.email}</p>
-        <div>
-          {isPending ? (
-            <p>Loading...</p>
-          ) : (
-            <p>Github Message: {s?.message}</p>
-          )}
-        </div>
-        </div>
-      )}
-    </div>
-  )
+    <>
+      <SiteHeader />
+      <main className="flex-1">
+        <Hero />
+        <TrustStrip />
+        <Pipeline />
+        <FeaturesBento />
+        <ConsolePreview />
+        <Metrics />
+        <Pricing />
+        <Faq />
+        <ClosingCta />
+      </main>
+      <SiteFooter />
+    </>
+  );
 }
-export default Page

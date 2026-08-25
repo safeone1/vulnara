@@ -16,7 +16,14 @@
       "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, \"userId\", \"expiresAt\", \"createdAt\" from session order by \"createdAt\" desc limit 5;')",
       "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, email, \"createdAt\" from \"user\" order by \"createdAt\" desc limit 5;')",
       "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, identifier, \"expiresAt\", \"createdAt\" from verification order by \"createdAt\" desc limit 10;')",
-      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, \"userId\", \"providerId\", \"createdAt\" from account order by \"createdAt\" desc limit 5;')"
+      "Bash(PGPASSWORD=vulnara psql -h localhost -p 6543 -U vulnara -d vulnara -c 'select id, \"userId\", \"providerId\", \"createdAt\" from account order by \"createdAt\" desc limit 5;')",
+      "Bash(bun add *)",
+      "Bash(bunx --bun shadcn@latest --help)",
+      "Bash(bunx --bun shadcn@latest preset list)",
+      "Bash(bunx --bun shadcn@latest info)",
+      "Bash(bunx --bun shadcn@latest init --base radix --preset radix-nova --no-monorepo --css-variables --yes)",
+      "Bash(bunx --bun shadcn@latest init --base radix --preset nova --no-monorepo --css-variables --yes)",
+      "Bash(bunx shadcn *)"
     ]
   }
 }
